@@ -37,7 +37,7 @@ func addTodoHandler(w http.ResponseWriter, r *http.Request) {
 	id := len(todoMap) + 1
 	todo := &Todo{id, name, false, time.Now()}
 	todoMap[id] = todo
-	rd.JSON(w, http.StatusOK, todo)
+	rd.JSON(w, http.StatusCreated, todo)
 }
 
 type Success struct {
@@ -68,15 +68,8 @@ func completeTodoHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func addTestTodos() {
-	todoMap[1] = &Todo{1, "Buy a milk", false, time.Now()}
-	todoMap[2] = &Todo{2, "Exercise", true, time.Now()}
-	todoMap[3] = &Todo{3, "Home Work", false, time.Now()}
-}
-
 func MakeHandler() http.Handler {
 	todoMap = make(map[int]*Todo)
-	addTestTodos()
 
 	rd = render.New()
 	r := mux.NewRouter()
