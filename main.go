@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/himsch/web-todo/app"
@@ -12,5 +13,9 @@ func main() {
 	n := negroni.Classic()
 	n.UseHandler(m)
 
-	http.ListenAndServe(":3000", n)
+	log.Println("Started App")
+	err := http.ListenAndServe(":3000", n)
+	if err != nil {
+		panic(err)
+	}
 }
